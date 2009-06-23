@@ -23,12 +23,28 @@ namespace Core {
             get { return _languageMap[_currentEngine]; }
         }
 
-        public Repl() {
+        public Repl()
+        {
+            EnsureApplicationResources();
             InitializeComponent();
             LoadResources();
             InitializeScriptEngines();
             InitializePlugins();
         }
+
+        public static void EnsureApplicationResources()
+        {
+            // In a hosted scenario, Application.Current can be null.
+            // Thanks to http://drwpf.com/blog/Home/tabid/36/EntryID/10/Default.aspx
+            // for this.
+
+            if (Application.Current == null)
+            {
+                // create the Application object
+                new Application();
+            }
+        }
+
 
         #region Component initialization 
 
